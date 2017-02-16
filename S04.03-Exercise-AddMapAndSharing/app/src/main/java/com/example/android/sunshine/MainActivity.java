@@ -30,6 +30,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.sunshine.ForecastAdapter.ForecastAdapterOnClickHandler;
 import com.example.android.sunshine.data.SunshinePreferences;
@@ -223,6 +224,25 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapterOn
 
         // TODO (2) Launch the map when the map menu item is clicked
 
+        if (id == R.id.menu_map){
+            openMap();
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openMap(){
+        String address = "Graha raya, Cluster Angrek Loka";
+        Uri geolocation = Uri.parse("geo:0,0?q="+address);
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(geolocation);
+
+        if(intent.resolveActivity(getPackageManager()) != null){
+            startActivity(intent);
+        }else{
+            Toast.makeText(MainActivity.this, "Apps Not Available", Toast.LENGTH_SHORT).show();
+        }
     }
 }
